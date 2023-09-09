@@ -13,12 +13,22 @@ __device__ float sigmoid(float x)
 
 __global__ void sigmoidActivationForward(float* input, float* output, const int input_rows, const int input_cols)
 {
-    //TODO: complete the sigmoid activation for forward propagation
+	int index = blockIdx.x * blockDim.x + threadIdx.x;
+
+	if (index < input_rows * input_cols)
+	{
+		output[index] = sigmoid(input[index]);
+	}
 }
 
 __global__ void sigmoidActivationBackprop(float* input, float* errorFromLayerBelow, float* errorToLayerAbove, const int input_rows, const int input_cols)
 {
-    //TODO: complete the derivative of the sigmoid activation for back propagation. This function returns the error to go to the layer above (eA)
+	int index = blockIdx.x * blockDim.x + threadIdx.x;
+
+	if (index < input_rows * input_cols)
+	{
+		errorToLayerAbove[index] = errorFromLayerBelow[index] * sigmoid(input[index]) * (1.0f - sigmoid(input[index]));
+	}
 }
 
 SigmoidActivation::SigmoidActivation(string name)

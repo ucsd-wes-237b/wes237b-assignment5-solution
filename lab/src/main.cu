@@ -35,7 +35,12 @@ int main(int argc, const char* argv[]) {
 	MSECost mse_cost;
 
 	NeuralNetwork nn = NeuralNetwork(0.01f);
-    //TODO: build your network structure
+	LinearLayer ll1 = LinearLayer("linear_1", Shape(2, 2));
+	nn.addLayer(&ll1);
+	nn.addLayer(new SigmoidActivation("sigmoid_1"));
+	LinearLayer ll2 = LinearLayer("linear_2", Shape(2, 1));
+	nn.addLayer(&ll2);
+	nn.addLayer(new SigmoidActivation("sigmoid_2"));
 
 	Matrix Y;
 	int final_epoch = 0;
@@ -61,8 +66,7 @@ int main(int argc, const char* argv[]) {
 		cost = cost/(dataset.getNumOfBatches()-1);
 
 #if PRINT_WEIGHTS
-        //Below is an example of how to print weight updates for a layer
-//		printed_lines += printWeights(ll1);
+		printed_lines += printWeights(ll1);
 #endif
 		printf("Cost : %f\n", cost);
 		printed_lines++;

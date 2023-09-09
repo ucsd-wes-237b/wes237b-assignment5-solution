@@ -1,6 +1,6 @@
 #include "dataset.h"
 
-//#define XNOR_GATE
+#define XNOR_GATE
 
 Dataset::Dataset(size_t batch_size, size_t number_of_batches) : 
 	batch_size(batch_size), number_of_batches(number_of_batches)
